@@ -1,0 +1,41 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'react-date-range/dist/styles.css';
+@import 'react-date-range/dist/theme/default.css';
+@import 'ag-grid-community/dist/styles/ag-grid.css';
+@import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
+
+@font-face {
+    font-family: "Romana";
+    src: url("/fonts/Romana_Bold.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+#__next .ag-theme-alpine .ag-root-wrapper,
+#__next .rdrDateRangePickerWrapper{
+    @apply border-none;
+}
+
+#__next .rdrInputRange:nth-child(2) {
+    @apply hidden;
+}
+
+#__next .ag-theme-alpine .ag-row {
+    border-width: 0;
+}
+
+@media (max-width: 768px) {
+    .rdrDefinedRangesWrapper {
+       display: none !important;
+    }
+}
+
+
+.ag-watermark {
+    display: none !important;
+}
+
