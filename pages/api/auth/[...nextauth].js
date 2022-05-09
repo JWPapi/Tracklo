@@ -12,11 +12,7 @@ export default NextAuth({
         FacebookProvider({
             clientId      : process.env.FACEBOOK_CLIENT_ID,
             clientSecret  : process.env.FACEBOOK_CLIENT_SECRET,
-            authorization : {
-                params : {
-                    scope : "email,ads_read,ads_management,public_profile,business_management, read_insights"
-                }
-            }
+            scope : "email,ads_read,ads_management,public_profile,business_management, read_insights"
         }),
         //ToDo: Remove EmailProvider
         EmailProvider({
