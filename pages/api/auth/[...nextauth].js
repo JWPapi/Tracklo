@@ -14,9 +14,7 @@ export default NextAuth({
             clientSecret  : process.env.FACEBOOK_CLIENT_SECRET,
             authorization : {
                 params : {
-                    scope : [
-                        'email', 'ads_read', 'ads_management', 'public_profile', 'business_management', 'read_insights'
-                    ]
+                    scope : "email,ads_read,ads_management,public_profile,business_management, read_insights"
                 }
             }
         }),
