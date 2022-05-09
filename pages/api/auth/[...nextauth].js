@@ -11,7 +11,10 @@ export default NextAuth({
     providers : [
         FacebookProvider({
             clientId     : process.env.FACEBOOK_CLIENT_ID,
-            clientSecret : process.env.FACEBOOK_CLIENT_SECRET
+            clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+            scope        : [
+                'email', 'ads_read', 'ads_management', 'public_profile', 'business_management', 'read_insights'
+            ]
         }),
         //ToDo: Remove EmailProvider
         EmailProvider({
@@ -39,5 +42,5 @@ export default NextAuth({
             return '/'
         }
     },
-    secret: process.env.NEXTAUTH_SECRET
+    secret    : process.env.NEXTAUTH_SECRET
 })
