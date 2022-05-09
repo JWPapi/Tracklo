@@ -19,21 +19,25 @@ export default NextAuth({
             from   : process.env.EMAIL_FROM
         })
     ],
+    //ToDo: Redirect works wrong
     callbacks : {
         async signIn({ user, account, profile, email, credentials }) {
             return true
         },
         async redirect({ url, baseUrl }) {
-            return baseUrl
+            return '/facebook/adAccountOverview'
         },
         async session({ session, user, token }) {
             session.user.id = user.id
             session.user.access_token = user.access_token
-            console.log(token)
             return session
         },
         async jwt({ token, user, account, profile, isNewUser }) {
             return token
+        },
+        async signOut({ session, user, account, profile }) {
+            return '/'
         }
-    }
+    },
+    secret: process.env.NEXTAUTH_SECRET
 })
