@@ -1,7 +1,6 @@
 export default function ListItem({ props }) {
 
     const Button = (connected) => {
-        console.log(connected)
         if (connected.connected === null) {
             return ( <button type="button"
                              className="inline-flex items-center  px-6 py-3 border border-transparent text-base
@@ -9,11 +8,9 @@ export default function ListItem({ props }) {
                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                              onClick={props.onClick}>
                 Connect Shopify </button> )
-        } else {
-            return <span>Already connected</span>
         }
+        return <span>Already connected</span>
     }
-
 
     return ( <li key={props.id}>
         <div className="flex items-center p-8 sm:px-6">

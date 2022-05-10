@@ -3,12 +3,12 @@ import { useState } from 'react'
 import *  as FbRequestGenerator from '../../utils/FbRequestGenerator'
 import * as shopRequestGenerator from '../../utils/ShopSoftwareRequestGenerator'
 import _ from 'lodash'
-import AdsTable from '../../layout/elements/AdsTable'
+import AdsTable from '../../layout/pages/adsOverview/AdsTable'
 import Select from 'react-select'
 import { DateRangePicker, defaultStaticRanges, defaultInputRanges } from 'react-date-range'
+import TrackingTemplateAlert from '../../layout/pages/adsOverview/TrackingTemplateAlert'
 
 const locale = require('date-fns/locale/de/index.js')
-import { useTranslation } from 'react-i18next'
 
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 
@@ -27,7 +27,6 @@ export default function Home() {
         endDate   : new Date(),
         key       : 'selection'
     })
-    const { t } = useTranslation()
 
     const { data : adAccounts } = useSWR('/api/db/getConnectedShops', fetcher)
     const shopRequest = shopRequestGenerator.getOrdersByUtm(
@@ -39,7 +38,6 @@ export default function Home() {
         shopName :  adAccounts?.find(s => s.shop.name === site)?.shop.name,
     })
     const { data : wcData } = useSWR(adAccounts ? shopRequest: null , fetcher)
-
     const { data : fbData } = useSWR(adAccounts? FbRequestGenerator.getEntityInsights(
     {
         type: utm,
@@ -52,18 +50,9 @@ export default function Home() {
     })
 
 
-
-    const staticRanges = defaultStaticRanges.map(range => {
-        range.label = t(range.label)
-        return range
-    })
-
     const handleDateSelect = ({ selection }) => {setDateRange(selection)}
     const handleUtmSelect = (utm) => setUtm(utm.value)
-    const handleSiteSelect = (site) => {
-        setSite(site.value)
-    }
-
+    const handleSiteSelect = (site) => setSite(site.value)
 
 
     const mergedData = _.merge(fbData, wcData)
@@ -84,12 +73,13 @@ export default function Home() {
                 <DateRangePicker className="md:flex md:justify-end"
                                  ranges={[dateRange]}
                                  onChange={handleDateSelect}
-                                 staticRanges={staticRanges}
+                                 staticRanges={defaultStaticRanges}
                                  locale={locale}/>
             </div>
         </div>
 
         <div className=" p-4">
+            <TrackingTemplateAlert />
             <AdsTable data={rowData}
                       selection={utm}/>
         </div>

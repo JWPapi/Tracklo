@@ -1,7 +1,7 @@
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import Layout from '../../layout/layout.js'
+import Layout from './Layout.js'
 
 export default function SessionMiddleware({ Component, pageProps }) {
     const router = useRouter()

@@ -1,4 +1,4 @@
-import Sidebar from './sidebar.js'
+import Sidebar from './Sidebar.js'
 import { useSession,signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
