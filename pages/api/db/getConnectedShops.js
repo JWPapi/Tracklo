@@ -24,5 +24,7 @@ export default async function handler(req,res)  {
     })).then(shops => {
         return shops.filter(shop => shop.shop !== null)
     })
+
+
     res.json(connectedShops)
 }

@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const insertedAdAccount = await prisma.adAccount.create({
         data : {
             accountId : adAccount,
-            userId    : session.user.id
+            userId    : session.sub
         }
     })
 
