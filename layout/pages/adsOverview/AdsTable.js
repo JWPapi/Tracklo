@@ -6,9 +6,7 @@ import { useWindowSize } from '@reach/window-size'
 export default function AdsTable({ data }) {
 
     const gridRef = useRef()
-
     const { width } = useWindowSize()
-
     const sizeToFit = useCallback(() => {
         if (width > 768) {
             gridRef.current['api'].sizeColumnsToFit()
@@ -26,7 +24,6 @@ export default function AdsTable({ data }) {
     }
 
     const columnDefs = [
-
         { field : 'name', width : 300, filter : 'agTextColumnFilter', headerName : 'Name' },
         { field : 'spend', width : 200, headerName : 'Ausgaben' },
 
@@ -37,8 +34,7 @@ export default function AdsTable({ data }) {
         { field : 'value', headerName : 'Umsatz' },
         { field : 'cpo', headerName : 'Kosten pro Bestellung' },
         { field : 'roas', headerName : 'Kapitalrendite' },
-        {
-            field          : 'inline_link_clicks', headerName : 'Link-Klicks',
+        { field          : 'inline_link_clicks', headerName : 'Link-Klicks',
             valueFormatter : params => Number(params.value).toFixed(0)
         },
         {

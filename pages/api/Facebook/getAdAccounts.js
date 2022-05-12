@@ -4,7 +4,6 @@ import { prisma } from '../../../db'
 const adsSdk = require('facebook-nodejs-business-sdk')
 
 export default async function handler(req, res) {
-
     const session = await getSession({ req })
     if (!session) return res.status(401).send('Only logged in users can access this endpoint')
 
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
 
     const accessToken = facebookAccount.access_token
     const api = adsSdk.FacebookAdsApi.init(accessToken)
-    api.setDebug(true)
 
     const user = new adsSdk.User(facebookAccount.providerAccountId)
 

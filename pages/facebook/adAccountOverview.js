@@ -1,7 +1,8 @@
 import useSWR from 'swr'
-import ListItem from '../../layout/pages/adAccountOverview/ListItem'
-import ConnectModal from '../../layout/pages/adAccountOverview/ConnectModal'
+import AdAccount from '../../layout/pages/adAccountOverview/AdAccount'
+import Modal from '../../layout/pages/adAccountOverview/Modal'
 import { useState } from 'react'
+import LoadingSpinner from '../../layout/components/LoadingSpinner'
 
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 
@@ -16,23 +17,21 @@ export default function Component() {
     }
     const hide = () => setModalState(false)
 
-    const listItems = adAccounts?.map(adAccount => {
-        return ( <ListItem key={adAccount.id}
-                           props={{
-                               name      : adAccount.name,
-                               id        : adAccount.id,
-                               onClick   : () => show(adAccount.id),
-                               connected : adAccount.connected
-                           }}/> )
-    })
+    const listItems = adAccounts?.map(adAccount =>
+    <AdAccount key={adAccount.id}
+               id={adAccount.id}
+               name={adAccount.name}
+               onClick={show}
+               connected={adAccount.connected}/>
+    )
 
     return ( <div className="bg-white shadow overflow-hidden sm:rounded-md m-8">
-        <ConnectModal modalState={modalState}
-                      onClose={hide}
-                      adAccount={selectedAdAccount}/>
+        <Modal modalState={modalState}
+               onClose={hide}
+               adAccount={selectedAdAccount}/>
         <ul role="list"
             className="divide-y divide-gray-200">
-            {listItems}
+            {listItems || <LoadingSpinner/>}
         </ul>
     </div> )
 

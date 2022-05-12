@@ -21,12 +21,9 @@ export default async function handler(req, res) {
     })
 
     const api = adsSdk.FacebookAdsApi.init(fbAccount.access_token)
-
-
     const fbEntity = fbEntityByUtmSelect(type)
 
-    const fields = [fbEntity + '_id', fbEntity + '_name', 'spend', 'inline_link_clicks', 'ctr']
-    if (fbEntity === 'ad') fields.push('adset_name')
+    const fields = [fbEntity + '_id', fbEntity + '_name', 'spend', 'inline_link_clicks', 'ctr', ...(fbEntity === 'ad' ? ['adset_name'] : [])]
     const params = {
         time_range : { since, until },
         level      : fbEntity,
