@@ -14,8 +14,7 @@ export default async function handler(req, res) {
         }
     })
 
-    if (!facebookAccount) return res.status(200).json([])
-
+    if (!facebookAccount) return res.status(404).send('No Facebook account found')
     const accessToken = facebookAccount.access_token
     const api = adsSdk.FacebookAdsApi.init(accessToken)
 
@@ -25,7 +24,8 @@ export default async function handler(req, res) {
     const adAccountsConnectionChecked = adAccounts.map(async adAccount => {
         adAccount._data.connected  = await prisma.adAccount.findFirst({
             where : {
-                accountId: adAccount._data.id
+                accountId: adAccount._data.id,
+                userId: session.sub
             }
         })
         return adAccount._data
