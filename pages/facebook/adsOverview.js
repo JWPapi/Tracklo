@@ -8,8 +8,7 @@ import Select from 'react-select'
 import { DateRangePicker, defaultStaticRanges } from 'react-date-range'
 import TrackingTemplateAlert from '../../layout/pages/adsOverview/TrackingTemplateAlert'
 import LoadingSpinner from '../../layout/components/LoadingSpinner'
-import { ad } from 'google-ads-api/build/src/protos/autogen/resourceNames'
-import { router } from 'next/client'
+import router  from 'next/router'
 
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 

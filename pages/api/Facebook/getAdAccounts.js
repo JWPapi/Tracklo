@@ -7,6 +7,8 @@ export default async function handler(req, res) {
     const session = await getSession({ req })
     if (!session) return res.status(401).send('Only logged in users can access this endpoint')
 
+    console.log(session.sub)
+
     const facebookAccount = await prisma.account.findFirst({
         where : {
             userId   : session.sub,
