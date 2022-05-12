@@ -24,13 +24,12 @@ export default function Component() {
                onClick={show}
                connected={adAccount.connected}/>
     )
+    const noAdAccountMessage = <li className="text-center p-8">Your FB Account has no access to any ad accounts</li>
 
     return ( <div className="bg-white shadow overflow-hidden sm:rounded-md m-8">
-        <Modal modalState={modalState}
-               onClose={hide}
-               adAccount={selectedAdAccount}/>
-        <ul role="list"
-            className="divide-y divide-gray-200">
+        <Modal modalState={modalState} onClose={hide} adAccount={selectedAdAccount}/>
+        <ul role="list" className="divide-y divide-gray-200">
+            {listItems?.length === 0 && noAdAccountMessage}
             {listItems || <LoadingSpinner/>}
         </ul>
     </div> )

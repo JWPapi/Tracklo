@@ -7,8 +7,6 @@ export default async function handler(req, res) {
     const session = await getSession({ req })
     if (!session) return res.status(401).send('Only logged in users can access this endpoint')
 
-    console.log(session)
-
     const facebookAccount = await prisma.account.findFirst({
         where : {
             userId   : session.sub,
@@ -16,7 +14,7 @@ export default async function handler(req, res) {
         }
     })
 
-    if (!facebookAccount) return res.status(401).send('No Fb account associated with user')
+    if (!facebookAccount) return res.status(200).json([])
 
     const accessToken = facebookAccount.access_token
     const api = adsSdk.FacebookAdsApi.init(accessToken)
