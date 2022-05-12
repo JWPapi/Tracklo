@@ -3,7 +3,6 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import EmailProvider from 'next-auth/providers/email'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 
-
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
@@ -21,8 +20,17 @@ export default NextAuth({
             from   : process.env.EMAIL_FROM
         })
     ],
-    session : {
-        strategy : 'jwt',
+    session   : {
+        strategy : 'jwt'
+    },
+    callbacks : {
+        async session({ session, token }) {
+            session.sub = token.sub
+            return session
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            return token
+        }
     },
     secret    : process.env.NEXTAUTH_SECRET
 })

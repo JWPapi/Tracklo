@@ -15,7 +15,7 @@ export default function Sidebar() {
             <div className="w-full h-24 border-b flex md:px-4 items-center md:mb-8" onClick={toggleNavigation}>
                <Image src="/Logo.png" width="192" height="55" objectFit="cover"  alt="Logo"/>
             </div>
-            <div>Signed in as: <strong>{session?.user.email}</strong></div>
+            <div>Signed in as: <strong>{session?.user?.email}</strong></div>
             <ul id="navigation" className="px-4 my-8 text-center md:text-left hidden md:block">
                 <li className="h-10">
                     <Link href="/facebook/adAccountOverview">Ad Account Overview</Link>

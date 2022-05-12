@@ -4,11 +4,10 @@ import { prisma } from '../../../db'
 export default async function handler(req,res)  {
 
     const session = await getSession({ req })
-    const user = session.user;
 
     const adAccounts = await prisma.adAccount.findMany({
         where: {
-            userId: user.id
+            userId: session.sub
         }
     })
 
