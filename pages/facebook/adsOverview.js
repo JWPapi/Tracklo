@@ -29,11 +29,12 @@ export default function Home() {
 
     //Data Calls
     const { data : adAccounts } = useSWR('/api/db/getConnectedShops', fetcher)
+    console.log(adAccounts)
     const validAccountsFound = adAccounts && adAccounts?.length > 0
     const { data : wcData } = useSWR(validAccountsFound ? ShopRequest.getOrdersByUtm({
         utmSelect : utm.value,
         dateRange,
-        shopName  : adAccounts[site].shopName
+        shopName  : adAccounts[site].shop.name
     }) : null, fetcher)
     const { data : fbData } = useSWR(validAccountsFound ? FbRequest.getEntityInsights({
         type        : utm.value,
