@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/react'
-import { prisma } from '../../../db'
+import { prisma } from '../../../../db'
 
 export default async function handler(req,res)  {
 
