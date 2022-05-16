@@ -1,12 +1,9 @@
-import fbEntityByUtmSelect from '../../../utils/fbEntityByUtmSelect'
 import { getSession } from 'next-auth/react'
 import { prisma } from '../../../db'
 
 const adsSdk = require('facebook-nodejs-business-sdk')
-//ToDo: Token hast to come from user
 
 
-//ToDo: Get Access Token from Session
 export default async function handler(req, res) {
 
     if (req.method !== 'POST') res.status(405).send('Only POST method is allowed')
@@ -21,12 +18,11 @@ export default async function handler(req, res) {
     })
 
     const api = adsSdk.FacebookAdsApi.init(fbAccount.access_token)
-    const fbEntity = fbEntityByUtmSelect(type)
 
-    const fields = [fbEntity + '_id', fbEntity + '_name', 'spend', 'inline_link_clicks', 'ctr', ...(fbEntity === 'ad' ? ['adset_name'] : [])]
+    const fields = [type + '_id', type + '_name', 'spend', 'inline_link_clicks', 'ctr', ...(type === 'ad' ? ['adset_name'] : [])]
     const params = {
         time_range : { since, until },
-        level      : fbEntity,
+        level      : type,
         limit      : 1000
     }
 
@@ -35,9 +31,9 @@ export default async function handler(req, res) {
 
     const serializesInsights = insights.map(async (item) => {
         item = item._data
-        item.name = item[fbEntity + '_name']
-        item.id = item[fbEntity + '_id']
-        if (fbEntity === 'ad') {
+        item.name = item[type + '_name']
+        item.id = item[type + '_id']
+        if (type === 'ad') {
             const ad = new adsSdk.Ad(item.ad_id)
             const creative = await ad.getAdCreatives(['thumbnail_url'])
             item.image = creative[0]._data.thumbnail_url

@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
 import Layout from '../layout/Layout'
 
+
 export default function App({ Component, pageProps : { session, ...pageProps } }) {
     return (
     <SessionProvider session={session}>

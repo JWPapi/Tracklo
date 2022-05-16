@@ -13,14 +13,8 @@ import axios from 'axios'
 const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
-const utmOptions = [
-    { value : 'utm_campaign', label : 'Kampagnen' },
-    { value : 'utm_medium', label : 'Anzeigengruppen' },
-    { value : 'utm_content', label : 'Anzeigen' }
-]
-
 export default function Home() {
-    const [utm, setUtm] = useState({ value : 'utm_campaign', label : 'Kampagnen' })
+    const [utm, setUtm] = useState({ trackingName : 'utm_campaign', fbName : 'campaign', label : 'Campaigns' })
     const [site, setSite] = useState(0)
     const [dateRange, setDateRange] = useState({
         startDate : new Date(),
@@ -29,12 +23,13 @@ export default function Home() {
     })
 
     //Data Calls
+    const { data : utmOptions } = useSWR('/api/db/READ/trackingEntities', GET)
     const { data : adAccounts } = useSWR('/api/db/READ/connectedShops', GET)
     const validAccountsFound = adAccounts && adAccounts?.length > 0
 
     const { data : wcData } = useSWR(validAccountsFound ? [
         `/api/Shopify/getOrdersByUtm`, {
-            utmSelect : utm.value,
+            utmSelect : utm.value.trackingName,
             since     : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
             until     : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
             shopName  : adAccounts[site].shop.name
@@ -46,11 +41,10 @@ export default function Home() {
         {
             since       : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
             until       : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
-            type        : utm.value,
+            type        : utm.value.fbName,
             adAccountId : adAccounts[site].adAccount.accountId
         }
     ] : null, POST)
-
 
     if (!adAccounts) return <LoadingSpinner/>
     if (adAccounts.length === 0) return <NoShopsConnected/>
@@ -62,10 +56,14 @@ export default function Home() {
     return ( <>
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
-                <Select className="mb-8" defaultValue={utmOptions[0]} options={utmOptions} onChange={setUtm}/> <Select
-            defaultValue={siteOptions[0]}
-            options={siteOptions}
-            onChange={(site) => setSite(site.i)}/>
+                <Select className="mb-8"
+                        defaultValue={utm}
+                        options={utmOptions.map(utm => Object.create({ value : utm, label : utm.label }))}
+                        onChange={setUtm}
+                        isSearchable={false}/> <Select isSearchable={false}
+                                                       defaultValue={siteOptions[0]}
+                                                       options={siteOptions}
+                                                       onChange={(site) => setSite(site.i)}/>
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
@@ -81,11 +79,9 @@ export default function Home() {
 }
 
 const NoShopsConnected = () => (
-    <div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
-        <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a
-                                                                                                Shop</button>
-    </div>
-)
+<div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
+    <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a Shop</button>
+</div> )
 
 
 
