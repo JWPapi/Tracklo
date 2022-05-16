@@ -31,7 +31,6 @@ export default function Home() {
     //Data Calls
     const { data : adAccounts } = useSWR('/api/db/READ/connectedShops', GET)
     const validAccountsFound = adAccounts && adAccounts?.length > 0
-    console.log(adAccounts)
 
     const { data : wcData } = useSWR(validAccountsFound ? [
         `/api/Shopify/getOrdersByUtm`, {
@@ -54,16 +53,7 @@ export default function Home() {
 
 
     if (!adAccounts) return <LoadingSpinner/>
-    if (adAccounts.length === 0) {
-        return (
-
-        <div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
-            <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a
-                                                                                                    Shop</button>
-        </div>
-
-        )
-    }
+    if (adAccounts.length === 0) return <NoShopsConnected/>
 
     const siteOptions = adAccounts.map((adAccount, i) => Object.create({ i, label : adAccount.shop.name }))
     const mergedData = _.merge(fbData, wcData)
@@ -90,7 +80,12 @@ export default function Home() {
     </> )
 }
 
-
+const NoShopsConnected = () => (
+    <div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
+        <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a
+                                                                                                Shop</button>
+    </div>
+)
 
 
 

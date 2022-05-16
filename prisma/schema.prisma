@@ -68,3 +68,10 @@ model Shop {
   adAccountId   String
   adAccount     AdAccount @relation(fields: [adAccountId], references: [id])
 }
+
+model TrackingEntity {
+  id                 String  @id @default(cuid())
+  trackingName       String
+  fbName             String
+  label              String
+}
