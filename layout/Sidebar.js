@@ -18,10 +18,10 @@ export default function Sidebar() {
             <div>Signed in as: <strong>{session?.user?.email}</strong></div>
             <ul id="navigation" className="px-4 my-8 text-center md:text-left hidden md:block">
                 <li className="h-10">
-                    <Link href="/facebook/adAccountOverview">Ad Account Overview</Link>
+                    <Link href="/adAccountOverview">Ad Account Overview</Link>
                 </li>
                 <li className="h-10">
-                    <Link href="/facebook/adsOverview">Facebook Übersicht</Link>
+                    <Link href="/index">Facebook Übersicht</Link>
                 </li>
                 <li className="h-10">
                     <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div>

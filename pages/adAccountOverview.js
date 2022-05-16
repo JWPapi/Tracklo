@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import AdAccount from '../../layout/pages/adAccountOverview/AdAccount'
-import Modal from '../../layout/pages/adAccountOverview/Modal'
+import AdAccount from '../layout/pages/adAccountOverview/AdAccount'
+import Modal from '../layout/pages/adAccountOverview/Modal'
 import { useState } from 'react'
-import LoadingSpinner from '../../layout/components/LoadingSpinner'
+import LoadingSpinner from '../layout/components/LoadingSpinner'
 
 
 const fetcher = (...args) => fetch(...args).then(r => r.json())
