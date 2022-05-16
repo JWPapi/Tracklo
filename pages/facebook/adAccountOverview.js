@@ -4,6 +4,7 @@ import Modal from '../../layout/pages/adAccountOverview/Modal'
 import { useState } from 'react'
 import LoadingSpinner from '../../layout/components/LoadingSpinner'
 
+
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 
 export default function Component() {
@@ -22,7 +23,7 @@ export default function Component() {
                id={adAccount.id}
                name={adAccount.name}
                onClick={show}
-               connected={adAccount.connected}/>
+               initiallyconnected={adAccount.connected}/>
     )
     const noAdAccountMessage = <li className="text-center p-8">Your FB Account has no access to any ad accounts</li>
 

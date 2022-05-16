@@ -12,7 +12,6 @@ export default async function handler(req, res) {
         }
     }).then(shop => shop.token)
 
-
     const queryString = `{
     orders (first: 100, reverse: true, query:"created_at:>${since} created_at:<${until}") {
         edges {
@@ -52,12 +51,12 @@ export default async function handler(req, res) {
     })
     const utmString = utmSelect.replace('utm_', '')
     const utmParameters = _.uniq(metaOrders.map(order => {
-        if (order.node.customerJourney.moments[0]['utmParameters'] == null ) return null
+        if (order.node.customerJourney.moments[0]['utmParameters'] == null) return null
         return order.node.customerJourney.moments[0]['utmParameters'][utmString]
     }))
     const summary = utmParameters.map(utmParameter => {
         const ordersByUtmParameter = metaOrders.filter(order => {
-            if (order.node.customerJourney.moments[0]['utmParameters'] == null ) return false
+            if (order.node.customerJourney.moments[0]['utmParameters'] == null) return false
             return order.node.customerJourney.moments[0]['utmParameters'][utmString] === utmParameter
         })
         const value = ordersByUtmParameter.reduce((acc, order) => {

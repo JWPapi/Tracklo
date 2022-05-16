@@ -1,16 +1,17 @@
 import useSWR from 'swr'
 import { useState } from 'react'
-import *  as FbRequest from '../../utils/FbRequestGenerator'
-import * as ShopRequest from '../../utils/ShopSoftwareRequestGenerator'
 import _ from 'lodash'
 import AdsTable from '../../layout/pages/adsOverview/AdsTable'
 import Select from 'react-select'
 import { DateRangePicker, defaultStaticRanges } from 'react-date-range'
 import TrackingTemplateAlert from '../../layout/pages/adsOverview/TrackingTemplateAlert'
 import LoadingSpinner from '../../layout/components/LoadingSpinner'
-import router  from 'next/router'
+import router from 'next/router'
+import { DateTime } from 'luxon'
+import axios from 'axios'
 
-const fetcher = (...args) => fetch(...args).then(r => r.json())
+const GET = (...args) => axios.get(...args).then(res => res.data)
+const POST = (...args) => axios.post(...args).then(res => res.data)
 
 const utmOptions = [
     { value : 'utm_campaign', label : 'Kampagnen' },
@@ -28,26 +29,37 @@ export default function Home() {
     })
 
     //Data Calls
-    const { data : adAccounts } = useSWR('/api/db/getConnectedShops', fetcher)
-    console.log(adAccounts)
+    const { data : adAccounts } = useSWR('/api/db/READ/connectedShops', GET)
     const validAccountsFound = adAccounts && adAccounts?.length > 0
-    const { data : wcData } = useSWR(validAccountsFound ? ShopRequest.getOrdersByUtm({
-        utmSelect : utm.value,
-        dateRange,
-        shopName  : adAccounts[site].shop.name
-    }) : null, fetcher)
-    const { data : fbData } = useSWR(validAccountsFound ? FbRequest.getEntityInsights({
-        type        : utm.value,
-        dateRange,
-        adAccountId : adAccounts[site].adAccount.accountId
-    }) : null, fetcher)
+    console.log(adAccounts)
+
+    const { data : wcData } = useSWR(validAccountsFound ? [
+        `/api/Shopify/getOrdersByUtm`, {
+            utmSelect : utm.value,
+            since     : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
+            until     : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
+            shopName  : adAccounts[site].shop.name
+        }
+    ] : null, POST)
+
+    const { data : fbData } = useSWR(validAccountsFound ? [
+        '/api/Facebook/getEntityInsights',
+        {
+            since       : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
+            until       : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
+            type        : utm.value,
+            adAccountId : adAccounts[site].adAccount.accountId
+        }
+    ] : null, POST)
+
 
     if (!adAccounts) return <LoadingSpinner/>
     if (adAccounts.length === 0) {
         return (
 
         <div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
-            <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a Shop</button>
+            <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a
+                                                                                                    Shop</button>
         </div>
 
         )
@@ -60,8 +72,10 @@ export default function Home() {
     return ( <>
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
-                <Select className="mb-8" defaultValue={utmOptions[0]} options={utmOptions} onChange={setUtm}/>
-                <Select defaultValue={siteOptions[0]} options={siteOptions} onChange={(site) => setSite(site.i)}/>
+                <Select className="mb-8" defaultValue={utmOptions[0]} options={utmOptions} onChange={setUtm}/> <Select
+            defaultValue={siteOptions[0]}
+            options={siteOptions}
+            onChange={(site) => setSite(site.i)}/>
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
@@ -71,8 +85,7 @@ export default function Home() {
             </div>
         </div>
         <div className=" p-4">
-            <TrackingTemplateAlert/>
-            <AdsTable data={rowData} selection={utm}/>
+            <TrackingTemplateAlert/> <AdsTable data={rowData} selection={utm}/>
         </div>
     </> )
 }
