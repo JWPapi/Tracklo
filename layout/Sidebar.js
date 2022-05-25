@@ -18,10 +18,10 @@ export default function Sidebar() {
             <div>Signed in as: <strong>{session?.user?.email}</strong></div>
             <ul id="navigation" className="px-4 my-8 text-center md:text-left hidden md:block">
                 <li className="h-10">
-                    <Link href="/adAccountOverview">Ad Account Overview</Link>
+                    <Link href="/adAccountOverview">Account Setup</Link>
                 </li>
                 <li className="h-10">
-                    <Link href="/">Facebook Übersicht</Link>
+                    <Link href="/">Facebook Overview</Link>
                 </li>
                 <li className="h-10">
                     <Link href="/">Session Overview</Link>
