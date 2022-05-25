@@ -16,9 +16,14 @@ export default async function handler(req, res) {
     orders (first: 100, reverse: true, query:"created_at:>${since} created_at:<${until}") {
         edges {
             node {
+                name
+                processedAt
                 customerJourney {
                     moments {
                         ...on CustomerVisit {
+                            source
+                            occurredAt
+                            referrerUrl
                             utmParameters {
                                 source
                                 campaign
@@ -29,6 +34,7 @@ export default async function handler(req, res) {
                         }
                     }
                     daysToConversion
+                    
                 }
                 totalPriceSet {
                     presentmentMoney    {
@@ -58,6 +64,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({
         averageMomentCount,
-        averageDaysToConversion
+        averageDaysToConversion,
+        orders
     })
 }

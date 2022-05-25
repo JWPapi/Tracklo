@@ -24,6 +24,9 @@ export default function Sidebar() {
                     <Link href="/">Facebook Übersicht</Link>
                 </li>
                 <li className="h-10">
+                    <Link href="/">Session Overview</Link>
+                </li>
+                <li className="h-10">
                     <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div>
                 </li>
             </ul>
