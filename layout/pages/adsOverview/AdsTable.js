@@ -40,7 +40,8 @@ export default function AdsTable({ data }) {
         {
             field          : 'ctr', headerName : 'Klickrate',
             valueFormatter : params => Number(params.value).toFixed(2) + '%'
-        }
+        },
+        { field : 'cpc', headerName : 'Kosten pro Klick' },
     ]
 
     if (data[0]?.image !== undefined) {
@@ -74,11 +75,13 @@ export default function AdsTable({ data }) {
         row.value = row.value ? Number(row.value) : 0
         row.cpo = row.spend && row.value ? ( row.spend / row.count ) : 0
         row.roas = ( row.value / row.spend )
+        row.cpc = row.spend && row.inline_link_clicks ? ( row.spend / row.inline_link_clicks ) : 0
         return row
     })
 
     const totalSpend = data.reduce((acc, cur) => acc + cur.spend, 0)
     const totalOrderValue = data.reduce((acc, cur) => acc + cur.value, 0)
+    const totalClicks = data.reduce((acc, cur) => acc + cur.inline_link_clicks, 0)
     const totals = [
         {
             name               : 'Totals',
@@ -87,8 +90,9 @@ export default function AdsTable({ data }) {
             value              : totalOrderValue,
             cpo                : data.reduce((acc, cur) => acc + cur.cpo, 0) / data.length,
             roas               : totalOrderValue / totalSpend,
-            inline_link_clicks : data.reduce((acc, cur) => acc + Number(cur.inline_link_clicks), 0).toFixed(0),
-            ctr                : data.reduce((acc, cur) => acc + Number(cur.ctr), 0) / data.length
+            inline_link_cliscks : totalClicks,
+            ctr                : data.reduce((acc, cur) => acc + Number(cur.ctr), 0) / data.length,
+            cpc                : totalSpend / totalClicks
         }
     ]
 

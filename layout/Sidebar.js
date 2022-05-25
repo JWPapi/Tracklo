@@ -21,7 +21,7 @@ export default function Sidebar() {
                     <Link href="/adAccountOverview">Ad Account Overview</Link>
                 </li>
                 <li className="h-10">
-                    <Link href="/index">Facebook Übersicht</Link>
+                    <Link href="/">Facebook Übersicht</Link>
                 </li>
                 <li className="h-10">
                     <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div>
