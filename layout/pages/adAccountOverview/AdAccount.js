@@ -28,7 +28,7 @@ export default function AdAccount({ id, name, initiallyconnected, onClick }) {
                         {( !initiallyconnected || justDisconnected === 'yes' ) &&
                         <button type="button" className="btn btn-outline btn-success" onClick={() => onClick(id)}>Connect Shopify </button>}
                         {( initiallyconnected && justDisconnected === 'no' ) &&
-                    <button type="button" className="btn btn-warning" onClick={() => onDeleteClick(id)}>Disconnect</button>}
+                    <button type="button" className="btn btn-error" onClick={() => onDeleteClick(id)}>Disconnect</button>}
                         {justDisconnected === 'deleting' && <LoadingSpinner/>}
                     </div>
             </div>

@@ -48,8 +48,8 @@ export default function Home() {
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
-                                 rangeColors={['#759EF5']}
-                                 color={'#759EF5'}
+                                 rangeColors={['#aabad9']}
+                                 color={'#aabad9'}
                                  ranges={[dateRange]}
                                  onChange={({ selection }) => setDateRange(selection)}
                                  staticRanges={defaultStaticRanges}/>

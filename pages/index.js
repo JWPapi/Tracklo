@@ -14,7 +14,9 @@ const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
 export default function Home() {
-    const [utm, setUtm] = useState({ value: { trackingName : 'utm_campaign', fbName : 'campaign'} , label : 'Campaigns' })
+    const [utm, setUtm] = useState({
+        value : { trackingName : 'utm_campaign', fbName : 'campaign' }, label : 'Campaigns'
+    })
     const [site, setSite] = useState(0)
     const [dateRange, setDateRange] = useState({
         startDate : new Date(),
@@ -57,20 +59,20 @@ export default function Home() {
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select className="mb-8 max-w-xs"
-                        defaultValue={utm}
                         options={utmOptions.map(utm => Object.create({ value : utm, label : utm.label }))}
                         onChange={setUtm}
-                        isSearchable={false}/> <Select
-            className="w-full max-w-xs" isSearchable={false}
-                                                       defaultValue={siteOptions[0]}
-                                                       options={siteOptions}
-                                                       onChange={(site) => setSite(site.i)}/>
+                        defaultValue={utmOptions[0]}
+                        isSearchable={false}
+                       /> <Select className="w-full max-w-xs"
+                                                      isSearchable={false}
+                                                      options={siteOptions.map((site,i) => Object.create({ i, label : site.label }))}
+                                                      onChange={(site) => setSite(site.i)}/>
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
                                  ranges={[dateRange]}
-                                 rangeColors={['#759EF5']}
-                                 color={'#759EF5'}
+                                 rangeColors={['#aabad9']}
+                                 color={'#aabad9'}
                                  onChange={({ selection }) => setDateRange(selection)}
                                  staticRanges={defaultStaticRanges}/>
             </div>

@@ -3,16 +3,25 @@ import { InformationCircleIcon } from '@heroicons/react/solid'
 
 export default function TrackingTemplateAlert() {
     return (
-    <div className="rounded-md-top bg-blue-50 p-4">
-        <div className="flex">
-            <div className="flex-shrink-0">
-                <InformationCircleIcon className="h-5 w-5 text-blue-400"
-                                       aria-hidden="true"/>
-            </div>
-            <div className="ml-3 ">
-                <div className="text-sm text-blue-700">Please make sure your Tracking Template on Facebook is set up exactly as this:
-                </div>
+    <div className="alert alert-info shadow-lg mb-8">
+        <div>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 className="stroke-current flex-shrink-0 w-6 h-6">
+                <path strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+
+                <div> Please make sure your Tracking Template on Facebook is set up exactly like this:</div>
+
+                <pre>
                 <code>{`utm_source=meta_id&utm_campaign={{campaign.id}}&utm_medium={{adset.id}}&utm_content={{ad.id}}&utm_term={{placement}}`}</code>
+            </pre>
             </div>
         </div>
     </div>

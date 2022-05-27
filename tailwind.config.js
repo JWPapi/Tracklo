@@ -27,17 +27,17 @@ module.exports = {
             {
                 mytheme : {
 
-                    'primary' : '#a7aba7',
+                    'primary' : '#e6414d',
 
-                    'secondary' : '#88ea89',
+                    'secondary' : '#df9d91',
 
-                    'accent' : '#24e53b',
+                    'accent' : '#e26f6f',
 
                     'neutral' : '#231C26',
 
-                    'base-100' : '#e0e2df',
+                    'base-100' : '#ede7d8',
 
-                    'info' : '#759EF5',
+                    'info' : '#aabad9',
 
                     'success' : '#1AD594',
 
