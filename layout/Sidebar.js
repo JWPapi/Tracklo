@@ -3,36 +3,26 @@ import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 
 export default function Sidebar() {
-    const { data: session, status } = useSession()
+    const { data : session, status } = useSession()
 
     const toggleNavigation = () => {
         const nav = document.querySelector('#navigation')
         nav.classList.toggle('hidden')
     }
 
-    return ( <>
-        <div className="md:w-96 md:h-full shadow-md bg-white px-4 md:min-h-screen w-full">
-            <div className="w-full h-24 border-b flex md:px-4 items-center md:mb-8" onClick={toggleNavigation}>
-               <Image src="/Logo.png" width="192" height="55" objectFit="cover"  alt="Logo"/>
-            </div>
-            <div>Signed in as: <strong>{session?.user?.email}</strong></div>
-            <ul id="navigation" className="px-4 my-8 text-center md:text-left hidden md:block">
-                <li className="h-10">
-                    <Link href="/adAccountOverview">Account Setup</Link>
-                </li>
-                <li className="h-10">
-                    <Link href="/">Facebook Overview</Link>
-                </li>
-                <li className="h-10">
-                    <Link href="/sessionOverview">Session Overview</Link>
-                </li>
-                <li className="h-10">
-                    <Link target="_blank" href="https://www.unicornads.com/">Unicorn Ads</Link>
-                </li>
-                <li className="h-10">
-                    <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div>
-                </li>
-            </ul>
-        </div>
-    </> )
+    return (
+    <div className="drawer-side border-1 shadow-2xl flex-start flex">
+        <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+
+        <ul className="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+            <Image src={`/images/trackloLogo.png`} height="228" width="717" layout="responsive" className="mb-8"/>
+            <li><Link href="/adAccountOverview">Account Setup</Link></li>
+            <li><Link href="/">Facebook Overview</Link>            </li>
+            <li><Link href="/sessionOverview">Session Overview</Link></li>
+            <li><Link target="_blank" href="https://www.unicornads.com/">Unicorn Ads</Link></li>
+            <li> <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div></li>
+        </ul>
+    </div>
+    )
 }
+

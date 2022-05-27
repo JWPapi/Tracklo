@@ -4,7 +4,6 @@ import Modal from '../layout/pages/adAccountOverview/Modal'
 import { useState } from 'react'
 import LoadingSpinner from '../layout/components/LoadingSpinner'
 
-
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 
 export default function Component() {
@@ -27,12 +26,9 @@ export default function Component() {
     )
     const noAdAccountMessage = <li className="text-center p-8">Your FB Account has no access to any ad accounts</li>
 
-    return ( <div className="bg-white shadow overflow-hidden sm:rounded-md m-8">
+    return ( <div className="flex flex-wrap">
         <Modal modalState={modalState} onClose={hide} adAccount={selectedAdAccount}/>
-        <ul role="list" className="divide-y divide-gray-200">
-            {listItems?.length === 0 && noAdAccountMessage}
-            {listItems || <LoadingSpinner/>}
-        </ul>
+        {listItems?.length === 0 && noAdAccountMessage} {listItems || <LoadingSpinner/>}
     </div> )
 
 }

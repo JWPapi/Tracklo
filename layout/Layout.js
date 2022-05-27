@@ -1,11 +1,14 @@
 import Sidebar from './Sidebar.js'
 
-
 export default function Layout({ children }) {
     return (
-    <div className="flex min-h-screen flex-col md:flex-row overflow-hidden">
+    <div className="drawer drawer-mobile">
+        <input id="my-drawer-2" type="checkbox" className="drawer-toggle"/>
+        <div className="drawer-content p-8 bg-white">
+            {children} <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open
+                                                                                                        drawer</label>
+        </div>
         <Sidebar/>
-        <main className="w-full bg-brand-dark-gray min-h-screen">{children}</main>
     </div>
     )
 }

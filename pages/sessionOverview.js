@@ -3,9 +3,8 @@ import { useState } from 'react'
 import Select from 'react-select'
 import { DateRangePicker, defaultStaticRanges } from 'react-date-range'
 import LoadingSpinner from '../layout/components/LoadingSpinner'
-import { DateTime } from 'luxon'
+import { DateTime} from 'luxon'
 import axios from 'axios'
-import router from 'next/router'
 import IconGenerator from '../layout/generator/iconGenerator'
 import NoShopsConnected from '../layout/components/NoShopsConnected'
 
@@ -39,7 +38,7 @@ export default function Home() {
 
     if (!shopifyData) return <LoadingSpinner/>
 
-    return ( <>
+    return ( <div className="card bg-base-100">
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select isSearchable={false}
@@ -49,6 +48,8 @@ export default function Home() {
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
+                                 rangeColors={['#759EF5']}
+                                 color={'#759EF5'}
                                  ranges={[dateRange]}
                                  onChange={({ selection }) => setDateRange(selection)}
                                  staticRanges={defaultStaticRanges}/>
@@ -57,19 +58,20 @@ export default function Home() {
         <div className="p-4">
             <SessionOverview shopifyData={shopifyData}/>
         </div>
-    </> )
+    </div> )
 }
 
 const orderRow = (order) => {
     const { name, processedAt, customerJourney } = order.node
     return ( <>
-        <tr key={name} className="p-8 bg-gray-100">
-            <td className="p-4">{name}</td>
-            <td className="p-4">{processedAt.substring(0, 10)}</td>
-            <td className="p-4">Sessions: {customerJourney?.moments.length}</td>
-            <td className="p-4">Days to Conversion: {customerJourney?.daysToConversion}</td>
+        <tr key={name} className="active">
+            <td>{name}</td>
+            <td>{DateTime.fromISO(processedAt).toFormat('dd.LL.yy')}</td>
+            <td>Sessions: {customerJourney?.moments.length}</td>
+            <td>Days to Conversion: {customerJourney?.daysToConversion}</td>
         </tr>
-        {customerJourney?.moments.map(sessionRow)}
+
+        {customerJourney?.moments.map((session, index) => sessionRow(session, index, processedAt))}
     </>
     )
 }
@@ -78,10 +80,23 @@ const SessionOverview = ({ shopifyData }) => {
     //ToDo: Should be outside of this component
     const orderList = shopifyData.orders.map(orderRow)
     return (
-    <div className="bg-white p-4">
-        <div>Average Session Length: {shopifyData.averageMomentCount?.toFixed(2)} sessions</div>
-        <div>Average Days to Conversion: {shopifyData.averageDaysToConversion?.toFixed(2)} days</div>
-        <table className="table-fixed w-full p-8 mt-8">
+    <div className="p-4">
+        <div className="alert alert-info shadow-lg">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     className="stroke-current flex-shrink-0 w-6 h-6">
+                    <path strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>Average Session Length: {shopifyData.averageMomentCount?.toFixed(2)} sessions</div>
+                <div>Average Days to Conversion: {shopifyData.averageDaysToConversion?.toFixed(2)} days</div>            </div>
+        </div>
+
+        <table className="table table-fixed w-full p-8 mt-8">
             {orderList}
         </table>
         <pre>{JSON.stringify(shopifyData, null, 2)}</pre>
@@ -89,13 +104,20 @@ const SessionOverview = ({ shopifyData }) => {
     )
 }
 
-const sessionRow = (session, index) => {
+const sessionRow = (session, index, processedAt) => {
+    if (session.source === 'an unknown source' && session.utmParameters.source === 'meta_id') {
+        session.source = 'facebook'
+    }
+
+    //ToDo: Icons for placements
     return (
-    <tr key={index} className="p-8">
-        <td className="p-4 pr-6">Session {index + 1}</td>
-        <td className="p-4">{session.occurredAt.substring(0, 10)}</td>
-        <td className="p-4">{IconGenerator(session.source)}</td>
-        <td className="p-4">{session.referrerUrl}</td>
+    <tr key={index} className="bg-white">
+        <td className="pr-6">Session {index + 1}</td>
+        <td>{DateTime.fromISO(session.occurredAt).toRelative({
+            base: DateTime.fromISO(processedAt)
+        }).replace('ago', 'before')}</td>
+        <td>{IconGenerator(session.source)}</td>
+        <td></td>
     </tr>
     )
 }

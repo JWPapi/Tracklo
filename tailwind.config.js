@@ -19,6 +19,33 @@ module.exports = {
         }
     },
     plugins : [
-        require('@tailwindcss/forms')
-    ]
+        require('@tailwindcss/forms'),
+        require('daisyui')
+    ],
+    daisyui : {
+        themes : [
+            {
+                mytheme : {
+
+                    'primary' : '#a7aba7',
+
+                    'secondary' : '#88ea89',
+
+                    'accent' : '#24e53b',
+
+                    'neutral' : '#231C26',
+
+                    'base-100' : '#e0e2df',
+
+                    'info' : '#759EF5',
+
+                    'success' : '#1AD594',
+
+                    'warning' : '#E4AE0C',
+
+                    'error' : '#F76E95'
+                }
+            }
+        ]
+    }
 }

@@ -53,14 +53,15 @@ export default function Home() {
     const mergedData = _.merge(fbData, wcData)
     const rowData = _.values(mergedData)
 
-    return ( <>
+    return ( <div className="card bg-base-100 shadow-xl p-4">
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
-                <Select className="mb-8"
+                <Select className="mb-8 max-w-xs"
                         defaultValue={utm}
                         options={utmOptions.map(utm => Object.create({ value : utm, label : utm.label }))}
                         onChange={setUtm}
-                        isSearchable={false}/> <Select isSearchable={false}
+                        isSearchable={false}/> <Select
+            className="w-full max-w-xs" isSearchable={false}
                                                        defaultValue={siteOptions[0]}
                                                        options={siteOptions}
                                                        onChange={(site) => setSite(site.i)}/>
@@ -68,6 +69,8 @@ export default function Home() {
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
                                  ranges={[dateRange]}
+                                 rangeColors={['#759EF5']}
+                                 color={'#759EF5'}
                                  onChange={({ selection }) => setDateRange(selection)}
                                  staticRanges={defaultStaticRanges}/>
             </div>
@@ -75,7 +78,7 @@ export default function Home() {
         <div className=" p-4">
             <TrackingTemplateAlert/> <AdsTable data={rowData} selection={utm}/>
         </div>
-    </> )
+    </div> )
 }
 
 const NoShopsConnected = () => (

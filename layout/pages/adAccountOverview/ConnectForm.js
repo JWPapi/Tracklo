@@ -78,10 +78,11 @@ export default function ConnectForm({ adAccount }) {
         <div className="mt-5 sm:mt-6">
             <form onSubmit={handleSubmit}>
                 <div className="input-div">
-                    <label htmlFor="name" className="input-label">Your Shopify Store Name</label>
+                    <label htmlFor="name" className="label">
+                        <span className="label-text"> Your Shopify Store Name</span></label>
                     <input type="text"
                            name="shopName"
-                           className="input-input"
+                           className="input input-bordered w-full max-w-xs"
                            minLength="3"
                            pattern="[a-zA-Z0-9-_]+"
                            title="Only alphanumeric characters and -_ are allowed"
@@ -89,16 +90,17 @@ export default function ConnectForm({ adAccount }) {
                 </div>
                 <div className="w-100 text-center">
                     <Link href="https://craftybase.com/images/blog/post/how-to-find-your-shopify-storefront-address-screenshot1.png">
-                        <a target="_blank" className="text-sm mt-2 underline text-gray-500 cursor-pointer"> What is my
+                        <a target="_blank" className="label-text-alt cursor-pointer"> What is my
                                                                                                             Shopify
                                                                                                             Store
                                                                                                             Name?</a>
                     </Link>
                 </div>
                 <div className="mt-8 input-div">
-                    <label htmlFor="name" className="input-label">Your Shopify API key</label>
+                    <label htmlFor="name" className="label">
+                        <span className="label-text">Your Shopify API key</span></label>
                     <input type="text"
-                           className="input-input"
+                           className="input input-bordered w-full max-w-xs"
                            name="token"
                            required
                            minLength="38"
@@ -107,14 +109,14 @@ export default function ConnectForm({ adAccount }) {
                 </div>
                 <div className="w-100 text-center">
                     <Link href="https://www.loom.com/share/ecec23285a6345ca9ac7c5a155178ec0">
-                        <a className="text-sm  mt-2 underline text-gray-500 cursor-pointer" target="_blank"> How to get
+                         <a className="label-text-alt cursor-pointer" target="_blank"> How to get
                                                                                                              my Shopify
                                                                                                              API
                                                                                                              key?</a>
                     </Link>
                 </div>
                 <button type="submit"
-                        className="mt-8 btn w-full inline-flex justify-center">
+                        className="btn btn-outline btn-success mt-8 w-full">
                     Connect To Shopify
                 </button>
             </form>
