@@ -41,9 +41,9 @@ export default function Home() {
     const { data : fbData } = useSWR(validAccountsFound ? [
         '/api/Facebook/getEntityInsights',
         {
-            since       : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
-            until       : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
-            type        : utm.value.fbName,
+            since : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
+            until : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
+            type : utm.value.fbName,
             adAccountId : adAccounts[site].adAccount.accountId
         }
     ] : null, POST)
@@ -51,7 +51,9 @@ export default function Home() {
     if (!adAccounts) return <LoadingSpinner/>
     if (adAccounts.length === 0) return <NoShopsConnected/>
 
-    const siteOptions = adAccounts.map((adAccount, i) => Object.create({ i, label : adAccount.shop.name }))
+    const siteOptions = adAccounts.map((adAccount, i) => Object.create({
+        i, label : adAccount.shop.name, value : adAccount.shop.name
+    }))
     const mergedData = _.merge(fbData, wcData)
     const rowData = _.values(mergedData)
 
@@ -59,14 +61,14 @@ export default function Home() {
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select className="mb-8 max-w-xs"
-                        options={utmOptions.map(utm => Object.create({ value : utm, label : utm.label }))}
+                        options={utmOptions?.map(utm => Object.create({ value : utm, label : utm.label }))}
                         onChange={setUtm}
                         defaultValue={utmOptions[0]}
-                        isSearchable={false}
-                       /> <Select className="w-full max-w-xs"
-                                                      isSearchable={false}
-                                                      options={siteOptions.map((site,i) => Object.create({ i, label : site.label }))}
-                                                      onChange={(site) => setSite(site.i)}/>
+                        isSearchable={false}/> <Select className="w-full max-w-xs"
+                                                       defaultValue={siteOptions[0]}
+                                                       isSearchable={false}
+                                                       options={siteOptions}
+                                                       onChange={(site) => setSite(site.i)}/>
             </div>
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"

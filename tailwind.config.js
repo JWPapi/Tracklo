@@ -28,21 +28,13 @@ module.exports = {
                 mytheme : {
 
                     'primary' : '#e6414d',
-
                     'secondary' : '#df9d91',
-
                     'accent' : '#e26f6f',
-
                     'neutral' : '#231C26',
-
                     'base-100' : '#ede7d8',
-
-                    'info' : '#aabad9',
-
+                    'info' : '#dcccb4',
                     'success' : '#1AD594',
-
                     'warning' : '#E4AE0C',
-
                     'error' : '#F76E95'
                 }
             }

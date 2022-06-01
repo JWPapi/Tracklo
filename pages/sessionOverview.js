@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Select from 'react-select'
 import { DateRangePicker, defaultStaticRanges } from 'react-date-range'
 import LoadingSpinner from '../layout/components/LoadingSpinner'
-import { DateTime} from 'luxon'
+import { DateTime } from 'luxon'
 import axios from 'axios'
 import IconGenerator from '../layout/generator/iconGenerator'
 import NoShopsConnected from '../layout/components/NoShopsConnected'
@@ -34,7 +34,9 @@ export default function Home() {
     if (!adAccounts) return <LoadingSpinner/>
     if (adAccounts.length === 0) return <NoShopsConnected/>
 
-    const siteOptions = adAccounts.map((adAccount, i) => Object.create({ i, label : adAccount.shop.name }))
+    const siteOptions = adAccounts.map((adAccount, i) => Object.create({
+        i, label : adAccount.shop.name, value : adAccount.shop.name
+    }))
 
     if (!shopifyData) return <LoadingSpinner/>
 
@@ -42,7 +44,7 @@ export default function Home() {
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select isSearchable={false}
-                        defaultValue={siteOptions[0]}
+                        defaultValue={siteOptions[site]}
                         options={siteOptions}
                         onChange={(site) => setSite(site.i)}/>
             </div>
@@ -64,11 +66,11 @@ export default function Home() {
 const orderRow = (order) => {
     const { name, processedAt, customerJourney } = order.node
     return ( <>
-        <tr key={name} className="active">
+        <tr key={name} className="active" >
             <td>{name}</td>
             <td>{DateTime.fromISO(processedAt).toFormat('dd.LL.yy')}</td>
-            <td>Sessions: {customerJourney?.moments.length}</td>
-            <td>Days to Conversion: {customerJourney?.daysToConversion}</td>
+            <td>{customerJourney ? 'Sessions: ' + customerJourney.moments.length : 'local sale'}</td>
+            <td>{customerJourney && 'Days to Conversion: '  + customerJourney.daysToConversion}</td>
         </tr>
 
         {customerJourney?.moments.map((session, index) => sessionRow(session, index, processedAt))}
@@ -93,7 +95,8 @@ const SessionOverview = ({ shopifyData }) => {
                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div>Average Session Length: {shopifyData.averageMomentCount?.toFixed(2)} sessions</div>
-                <div>Average Days to Conversion: {shopifyData.averageDaysToConversion?.toFixed(2)} days</div>            </div>
+                <div>Average Days to Conversion: {shopifyData.averageDaysToConversion?.toFixed(2)} days</div>
+            </div>
         </div>
 
         <table className="table table-fixed w-full p-8 mt-8">
@@ -114,7 +117,7 @@ const sessionRow = (session, index, processedAt) => {
     <tr key={index} className="bg-white">
         <td className="pr-6">Session {index + 1}</td>
         <td>{DateTime.fromISO(session.occurredAt).toRelative({
-            base: DateTime.fromISO(processedAt)
+            base : DateTime.fromISO(processedAt)
         }).replace('ago', 'before')}</td>
         <td>{IconGenerator(session.source)}</td>
         <td></td>
