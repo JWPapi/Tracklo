@@ -3,13 +3,19 @@ import AdAccount from '../layout/pages/adAccountOverview/AdAccount'
 import Modal from '../layout/pages/adAccountOverview/Modal'
 import { useState } from 'react'
 import LoadingSpinner from '../layout/components/LoadingSpinner'
+import { useSession } from "next-auth/react"
+
 
 const fetcher = (...args) => fetch(...args).then(r => r.json())
 
 export default function Component() {
+    const {data : session, status } = useSession()
     const [modalState, setModalState] = useState(false)
     const [selectedAdAccount, setSelectedAdAccount] = useState(null)
     const { data : adAccounts } = useSWR('/api/Facebook/getAdAccounts', fetcher)
+    if (status === 'loading') return <></>
+    if (status === 'unauthenticated') return <p>Access Denied</p>
+
 
     const show = (adAccount) => {
         setSelectedAdAccount(adAccount)

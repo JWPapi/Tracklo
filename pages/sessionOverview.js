@@ -7,11 +7,13 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import IconGenerator from '../layout/generator/iconGenerator'
 import NoShopsConnected from '../layout/components/NoShopsConnected'
+import { useSession } from 'next-auth/react'
 
 const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
 export default function Home() {
+    const {data : session, status } = useSession()
     const [site, setSite] = useState(0)
     const [dateRange, setDateRange] = useState({
         startDate : new Date(),
@@ -31,6 +33,7 @@ export default function Home() {
         }
     ] : null, POST)
 
+    if (status === 'unauthenticated') return <p>Access Denied</p>
     if (!adAccounts) return <LoadingSpinner/>
     if (adAccounts.length === 0) return <NoShopsConnected/>
 

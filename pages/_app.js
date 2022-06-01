@@ -9,14 +9,26 @@ export default function App({ Component, pageProps : { session, ...pageProps } }
         if (Component.noDrawer) return <Component {...pageProps} />
         return ( <Layout> <Component {...pageProps} /> </Layout> )
     }
+    console.log(Component)
+
+    if (Component.noLogin) return ( <>
+        <Header/> {getLayout({ Component })}
+    </> )
+
     return (
     <SessionProvider session={session}>
-        <Head>
+        <Header/> {getLayout({ Component })}
+    </SessionProvider>
+    )
+
+}
+
+const Header = () => {
+    return (
+    <Head>
         <title>Tracklo.io – Track with Confidence</title>
         <link rel="icon" href="/favicon.ico"/>
     </Head>
-        {getLayout({ Component })}
-    </SessionProvider>
     )
 }
 

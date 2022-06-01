@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/react'
 
 export default function Sidebar() {
     const { data : session, status } = useSession()
+    if (status === 'unauthenticated' || status === 'loading') return <></>
 
     const toggleNavigation = () => {
         const nav = document.querySelector('#navigation')

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 import mockup from '../public/images/mockup.png'
+import Link from 'next/link'
 
 export default function Frontpage() {
     return (
@@ -24,7 +25,7 @@ export default function Frontpage() {
                     <p className="py-6">
                         Do we really need to tell you how much 💵💵💵 this means?
                     </p>
-                    <button className="btn btn-primary max">Become a Beta Tester</button>
+                    <CTAButton/>
                 </div>
             </div>
         </div>
@@ -38,9 +39,7 @@ const Header = () => {
         <div className="block max-w-xs">
             <Image alt="Logo" src={logo}/>
         </div>
-
-        <a className="btn btn-primary">Become a Beta Tester</a>
-
+        <CTAButton/>
     </div>
     )
 }
@@ -48,3 +47,11 @@ const Header = () => {
 Frontpage.noDrawer = function noDrawer() {
     return true
 }
+Frontpage.noLogin = function noLogin() {
+    return true
+}
+
+const CTAButton = () => (<Link href="/auth/signin" passHref>
+    <button className="btn btn-primary text-white">Become a Beta Tester</button>
+</Link>)
+

@@ -30,6 +30,9 @@ export default NextAuth({
         },
         async jwt({ token, user, account, profile, isNewUser }) {
             return token
+        },
+        async redirect({url, baseUrl}) {
+            return '/'
         }
     },
     secret    : process.env.NEXTAUTH_SECRET,

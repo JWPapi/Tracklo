@@ -9,11 +9,13 @@ import LoadingSpinner from '../layout/components/LoadingSpinner'
 import router from 'next/router'
 import { DateTime } from 'luxon'
 import axios from 'axios'
+import { useSession } from 'next-auth/react'
 
 const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
 export default function Home() {
+    const {data : session, status } = useSession()
     const [utm, setUtm] = useState({
         value : { trackingName : 'utm_campaign', fbName : 'campaign' }, label : 'Campaigns'
     })
@@ -23,6 +25,7 @@ export default function Home() {
         endDate   : new Date(),
         key       : 'selection'
     })
+    if (status === 'unauthenticated') return <p>Access Denied</p>
 
     //Data Calls
     const { data : utmOptions } = useSWR('/api/db/READ/trackingEntities', GET)
