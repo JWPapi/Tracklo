@@ -1,99 +1,57 @@
-import useSWR from 'swr'
-import { useState } from 'react'
-import _ from 'lodash'
-import AdsTable from '../layout/pages/adsOverview/AdsTable'
-import Select from 'react-select'
-import { DateRangePicker, defaultStaticRanges } from 'react-date-range'
-import TrackingTemplateAlert from '../layout/pages/adsOverview/TrackingTemplateAlert'
-import LoadingSpinner from '../layout/components/LoadingSpinner'
-import router from 'next/router'
-import { DateTime } from 'luxon'
-import axios from 'axios'
-import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import logo from '../public/images/logo.png'
+import mockup from '../public/images/mockup.png'
+import Link from 'next/link'
 
-const GET = (...args) => axios.get(...args).then(res => res.data)
-const POST = (...args) => axios.post(...args).then(res => res.data)
-
-export default function Home() {
-    const {data : session, status } = useSession()
-    const [utm, setUtm] = useState({
-        value : { trackingName : 'utm_campaign', fbName : 'campaign' }, label : 'Campaigns'
-    })
-    const [site, setSite] = useState(0)
-    const [dateRange, setDateRange] = useState({
-        startDate : new Date(),
-        endDate   : new Date(),
-        key       : 'selection'
-    })
-    if (status === 'unauthenticated') return <p>Access Denied</p>
-
-    //Data Calls
-    const { data : utmOptions } = useSWR('/api/db/READ/trackingEntities', GET)
-    const { data : adAccounts } = useSWR('/api/db/READ/connectedShops', GET)
-    const validAccountsFound = adAccounts && adAccounts?.length > 0
-
-    const { data : wcData } = useSWR(validAccountsFound ? [
-        `/api/Shopify/getOrdersByUtm`, {
-            utmSelect : utm.value.trackingName,
-            since     : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
-            until     : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
-            shopName  : adAccounts[site].shop.name
-        }
-    ] : null, POST)
-
-    const { data : fbData } = useSWR(validAccountsFound ? [
-        '/api/Facebook/getEntityInsights',
-        {
-            since : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
-            until : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
-            type : utm.value.fbName,
-            adAccountId : adAccounts[site].adAccount.accountId
-        }
-    ] : null, POST)
-
-    if (!adAccounts) return <LoadingSpinner/>
-    if (adAccounts.length === 0) return <NoShopsConnected/>
-
-    const siteOptions = adAccounts.map((adAccount, i) => Object.create({
-        i, label : adAccount.shop.name, value : adAccount.shop.name
-    }))
-    const mergedData = _.merge(fbData, wcData)
-    const rowData = _.values(mergedData)
-
-    return ( <div className="card bg-base-100 shadow-xl p-4">
-        <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
-            <div>
-                <Select className="mb-8 max-w-xs"
-                        options={utmOptions?.map(utm => Object.create({ value : utm, label : utm.label }))}
-                        onChange={setUtm}
-                        defaultValue={utmOptions[0]}
-                        isSearchable={false}/> <Select className="w-full max-w-xs"
-                                                       defaultValue={siteOptions[0]}
-                                                       isSearchable={false}
-                                                       options={siteOptions}
-                                                       onChange={(site) => setSite(site.i)}/>
-            </div>
-            <div className="mt-8 md:mt-0 text-center md:text-left">
-                <DateRangePicker className="md:flex md:justify-end"
-                                 ranges={[dateRange]}
-                                 rangeColors={['#aabad9']}
-                                 color={'#aabad9'}
-                                 onChange={({ selection }) => setDateRange(selection)}
-                                 staticRanges={defaultStaticRanges}/>
+export default function Index() {
+    return (
+    <>
+        <Header/>
+        <div className="hero min-h-screen bg-base-200">
+            <div className="hero-content flex-col lg:flex-row-reverse">
+                <div className="mockup-window border bg-base-300">
+                    <Image alt="mockup" src={mockup}/>
+                </div>
+                <div>
+                    <h1 className="text-5xl font-bold">Track with Confidence</h1>
+                    <p className="py-6">Since iOS 15.4 tracking has been a nightmare for marketers. What if we tell you
+                                        that you still can track every single contact point of each order with all your
+                                        marketing&nbsp;channels?
+                    </p>
+                    <p className="py-2">
+                        Tracklo connects your marketing platforms with your Shopify Shop and finally gives you the peace
+                        of mind to know which campaigns are working and which&nbsp;won’t.
+                    </p>
+                    <p className="py-6">
+                        Do we really need to tell you how much 💵💵💵 this means?
+                    </p>
+                    <CTAButton/>
+                </div>
             </div>
         </div>
-        <div className=" p-4">
-            <TrackingTemplateAlert/> <AdsTable data={rowData} selection={utm}/>
-        </div>
-    </div> )
+    </>
+    )
 }
 
-const NoShopsConnected = () => (
-<div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
-    <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a Shop</button>
-</div> )
+const Header = () => {
+    return (
+    <div className="navbar bg-base-200 justify-between p-8">
+        <div className="block max-w-xs">
+            <Image alt="Logo" src={logo}/>
+        </div>
+        <CTAButton/>
+    </div>
+    )
+}
 
+Index.noDrawer = function noDrawer() {
+    return true
+}
+Index.noLogin = function noLogin() {
+    return true
+}
 
-
-
+const CTAButton = () => (<Link href="/auth/signin" passHref>
+    <button className="btn btn-primary text-white">Become a Beta Tester</button>
+</Link>)
 

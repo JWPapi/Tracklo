@@ -14,7 +14,6 @@ export default NextAuth({
             clientSecret  : process.env.FACEBOOK_CLIENT_SECRET,
             authorization : 'https://www.facebook.com/v11.0/dialog/oauth?scope=email,ads_read'
         }),
-        //ToDo: Remove EmailProvider
         EmailProvider({
             server : process.env.EMAIL_SERVER,
             from   : process.env.EMAIL_FROM
@@ -32,7 +31,7 @@ export default NextAuth({
             return token
         },
         async redirect({url, baseUrl}) {
-            return '/'
+            return '/facebookOverview'
         }
     },
     secret    : process.env.NEXTAUTH_SECRET,
