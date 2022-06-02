@@ -9,20 +9,17 @@ import IconGenerator from '../layout/generator/iconGenerator'
 import NoShopsConnected from '../layout/components/NoShopsConnected'
 import { useSession } from 'next-auth/react'
 import _ from 'lodash'
+import { todayDateRange } from '../utils/utils'
 const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
 export default function SessionOverviewPage () {
   const { data:  session, status } = useSession()
   const [site, setSite] = useState(0)
-  const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
-    endDate  : new Date(),
-    key      : 'selection'
-  })
+  const [dateRange, setDateRange] = useState(todayDateRange)
 
   const { data: adAccounts } = useSWR('/api/db/READ/connectedShops', GET)
-  const { data: shopifyData } = useSWR(_.not(_.isEmpty(adAccounts)) ? [
+  const { data: shopifyData } = useSWR(!_.isEmpty(adAccounts) ? [
     `/api/Shopify/getAverageSessionLength`, {
       since   : DateTime.fromJSDate(dateRange.startDate).toFormat('yyyy-MM-dd'),
       until   : DateTime.fromJSDate(dateRange.endDate).toFormat('yyyy-MM-dd'),
@@ -41,19 +38,20 @@ export default function SessionOverviewPage () {
   if (!shopifyData) return <LoadingSpinner/>
 
   return (
-    <div className="card border border-primary">
+    <div className="card border border-primary p-4 bg-base-200">
       <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
         <div>
           <Select isSearchable={false}
+                  className="outline-primary-focus text-base-300"
                   defaultValue={siteOptions[site]}
                   options={siteOptions}
                   onChange={(site) => setSite(site.i)}/>
         </div>
         <div className="mt-8 md:mt-0 text-center md:text-left">
-          <DateRangePicker className="md:flex md:justify-end"
-                           rangeColors={['#aabad9']}
-                           color={'#aabad9'}
+          <DateRangePicker className="md:flex md:justify-end text-base-content"
                            ranges={[dateRange]}
+                           rangeColors={['#B4ADEA']}
+                           color={'#B4ADEA'}
                            onChange={({ selection }) => setDateRange(selection)}
                            staticRanges={defaultStaticRanges}/>
         </div>

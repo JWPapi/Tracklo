@@ -98,16 +98,16 @@ export default function AdsTable({ data }) {
 
     return (
     <>
-        <div className="flex justify-between  p-4  pr-2 bg-white">
-            <h2 className="text-xl font-bold text-base-300">Werbung Übersicht</h2>
+        <div className="flex justify-between p-4 pr-2">
+            <h2 className="text-xl font-bold">Werbung Übersicht</h2>
             <Image src={'/icons/excelDownload.svg'}
                    alt="excel download"
-                   className="p-8 cursor-pointer bg-white"
+                   className="p-8 cursor-pointer "
                    width={24}
                    height={24}
                    onClick={() => gridRef.current['api'].exportDataAsExcel()}/>
         </div>
-        <div className="ag-theme-alpine">
+        <div className="ag-theme-alpine-dark">
             <AgGridReact ref={gridRef}
                          domLayout="autoHeight"
                          rowData={serializedData}

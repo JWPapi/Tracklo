@@ -18,6 +18,7 @@ module.exports = {
                     'primary' : '#998653',
                     'accent' : '#F7FFDD',
                     'base-100' : '#353535',
+                    'base-content' : '#FFFFFF',
                     'info' : '#B4ADEA',
                     'error' : '#D81E5B'
                 }

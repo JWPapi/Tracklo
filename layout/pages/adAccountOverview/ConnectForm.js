@@ -79,7 +79,7 @@ export default function ConnectForm({ adAccount }) {
             <form onSubmit={handleSubmit}>
                 <div className="input-div">
                     <label htmlFor="name" className="label">
-                        <span className="label-text"> Your Shopify Store Name</span></label>
+                        <span className="label-text text-base-300"> Your Shopify Store Name</span></label>
                     <input type="text"
                            name="shopName"
                            className="input input-bordered w-full max-w-xs"
@@ -90,7 +90,7 @@ export default function ConnectForm({ adAccount }) {
                 </div>
                 <div className="w-100 text-center">
                     <Link href="https://craftybase.com/images/blog/post/how-to-find-your-shopify-storefront-address-screenshot1.png">
-                        <a target="_blank" className="label-text-alt cursor-pointer"> What is my
+                        <a target="_blank" className="label-text-alt text-base-100 cursor-pointer"> What is my
                                                                                                             Shopify
                                                                                                             Store
                                                                                                             Name?</a>
@@ -98,7 +98,7 @@ export default function ConnectForm({ adAccount }) {
                 </div>
                 <div className="mt-8 input-div">
                     <label htmlFor="name" className="label">
-                        <span className="label-text">Your Shopify API key</span></label>
+                        <span className="label-text text-base-300">Your Shopify API key</span></label>
                     <input type="text"
                            className="input input-bordered w-full max-w-xs"
                            name="token"
@@ -109,14 +109,14 @@ export default function ConnectForm({ adAccount }) {
                 </div>
                 <div className="w-100 text-center">
                     <Link href="https://www.loom.com/share/ecec23285a6345ca9ac7c5a155178ec0">
-                         <a className="label-text-alt cursor-pointer" target="_blank"> How to get
+                         <a className="label-text-alt text-base-100 cursor-pointer" target="_blank"> How to get
                                                                                                              my Shopify
                                                                                                              API
                                                                                                              key?</a>
                     </Link>
                 </div>
                 <button type="submit"
-                        className="btn btn-outline btn-success mt-8 w-full">
+                        className="btn btn-outline btn-primary mt-8 w-full">
                     Connect To Shopify
                 </button>
             </form>

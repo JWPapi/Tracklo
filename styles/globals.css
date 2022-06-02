@@ -4,18 +4,10 @@
 @import 'react-date-range/dist/styles.css';
 @import 'react-date-range/dist/theme/default.css';
 @import 'ag-grid-community/dist/styles/ag-grid.css';
-@import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+@import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 @import 'remixicon/fonts/remixicon.css';
 
 
-
-@font-face {
-    font-family: "Romana";
-    src: url("/fonts/Romana_Bold.ttf");
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-}
 
 #__next .ag-theme-alpine .ag-root-wrapper,
 #__next .rdrDateRangePickerWrapper{
@@ -39,5 +31,35 @@
 .ag-watermark {
     display: none !important;
 }
+.rdrDefinedRangesWrapper,
+.rdrDateDisplayWrapper,
+.rdrMonths,
+.rdrDay span,
+.rdrMonthAndYearWrapper,
+.rdrCalendarWrapper,
+.rdrStaticRange:hover .rdrStaticRangeLabel{
+    background: transparent !important;
+    color: hsl(var(--bc) / var(--tw-text-opacity)) !important;
+}
+.rdrDefinedRangesWrapper {
+    border: none !important;
+}
+
+.rdrStaticRange {
+    border-bottom: 0;
+}
+/* ToDo should be connected to theme */
+.rdrPprevButton i {
+    border-right-color: hsl(var(--bc) / var(--tw-text-opacity));
+}
+.rdrNextButton i {
+    border-left-color: hsl(var(--bc) / var(--tw-text-opacity));
+}
+
+.rdrMonthAndYearPickers select {
+    color: hsl(var(--bc) / var(--tw-text-opacity));
+}
+
+
 
 
