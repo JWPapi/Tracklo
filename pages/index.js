@@ -52,6 +52,6 @@ Index.noLogin = function noLogin() {
 }
 
 const CTAButton = () => (<Link href="/auth/signin" passHref>
-    <button className="btn btn-primary text-white">Become a Beta Tester</button>
+    <button className="btn btn-accent text-black">Become a Beta Tester</button>
 </Link>)
 

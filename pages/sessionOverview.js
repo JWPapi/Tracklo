@@ -43,7 +43,7 @@ export default function Home() {
 
     if (!shopifyData) return <LoadingSpinner/>
 
-    return ( <div className="card bg-base-100">
+    return ( <div className="card border border-primary">
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select isSearchable={false}
@@ -102,7 +102,7 @@ const SessionOverview = ({ shopifyData }) => {
             </div>
         </div>
 
-        <table className="table table-fixed w-full p-8 mt-8">
+        <table className="table table-fixed w-full p-8 mt-8 ">
             {orderList}
         </table>
         <pre>{JSON.stringify(shopifyData, null, 2)}</pre>
@@ -117,7 +117,7 @@ const sessionRow = (session, index, processedAt) => {
 
     //ToDo: Icons for placements
     return (
-    <tr key={index} className="bg-white">
+    <tr key={index} className="bg-white text-black">
         <td className="pr-6">Session {index + 1}</td>
         <td>{DateTime.fromISO(session.occurredAt).toRelative({
             base : DateTime.fromISO(processedAt)

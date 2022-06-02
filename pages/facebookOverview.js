@@ -49,7 +49,7 @@ export default function Home() {
 
     const siteOptions = generateSiteOptions({adAccounts})
 
-    return ( <div className="card bg-base-100 shadow-xl p-4">
+    return ( <div className="card bg-base-200 p-4 border border-primary">
         <div className="p-4 md:grid md:grid-cols-2 gap-8 justify-end">
             <div>
                 <Select className="mb-8 max-w-xs"
@@ -65,8 +65,8 @@ export default function Home() {
             <div className="mt-8 md:mt-0 text-center md:text-left">
                 <DateRangePicker className="md:flex md:justify-end"
                                  ranges={[dateRange]}
-                                 rangeColors={['#aabad9']}
-                                 color={'#aabad9'}
+                                 rangeColors={['#B4ADEA']}
+                                 color={'#B4ADEA'}
                                  onChange={({ selection }) => setDateRange(selection)}
                                  staticRanges={defaultStaticRanges}/>
             </div>

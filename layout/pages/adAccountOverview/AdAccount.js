@@ -20,13 +20,13 @@ export default function AdAccount({ id, name, initiallyconnected, onClick }) {
         setJustDisconnected('yes')
     } )
 
-    return <div className="card card-compact w-96 bg-base-100 shadow-xl m-4" key={id}>
+    return <div className="card card-compact w-96 bg-base-300 border border-primary shadow-xl m-4" key={id}>
             <div className="card-body">
                         <h2 className="card-title">{name}</h2>
                         <p>{id}</p>
                     <div className="card-actions justify-end">
                         {( !initiallyconnected || justDisconnected === 'yes' ) &&
-                        <button type="button" className="btn btn-outline btn-success" onClick={() => onClick(id)}>Connect Shopify </button>}
+                        <button type="button" className="btn btn-outline btn-accent " onClick={() => onClick(id)}>Connect Shopify </button>}
                         {( initiallyconnected && justDisconnected === 'no' ) &&
                     <button type="button" className="btn btn-error" onClick={() => onDeleteClick(id)}>Disconnect</button>}
                         {justDisconnected === 'deleting' && <LoadingSpinner/>}

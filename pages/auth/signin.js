@@ -26,7 +26,7 @@ export default function SignIn({ csrfToken }) {
                            placeholder="info@site.com"
                            className="input input-bordered bg-white "/>
                 </label>
-                <button type="submit" className="btn w-64">Sign in with Email</button>
+                <button type="submit" className="btn btn-primary w-64">Sign in with Email</button>
                 </>)}
             </form>
         </div>
