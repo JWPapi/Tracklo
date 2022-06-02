@@ -5,11 +5,11 @@ import Head from 'next/head'
 import Layout from '../layout/Layout'
 
 export default function App({ Component, pageProps : { session, ...pageProps } }) {
+    //ToDo: upload new favicon
     const getLayout = ({ Component }) => {
         if (Component.noDrawer) return <Component {...pageProps} />
         return ( <Layout> <Component {...pageProps} /> </Layout> )
     }
-    console.log(Component)
 
     if (Component.noLogin) return ( <>
         <Header/> {getLayout({ Component })}

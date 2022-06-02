@@ -22,8 +22,7 @@ export default function Sidebar() {
             </div>
             <li className="mt-8"><Link href="/adAccountOverview">Account Setup</Link></li>
             <li><Link href="/facebookOverview">Facebook Overview</Link>            </li>
-            <li><Link href="/sessionOverview">Session Overview</Link></li>
-            <li><Link target="_blank" href="https://www.unicornads.com/">Unicorn Ads</Link></li>
+            <li><Link href="/SessionOverviewPage">Session Overview</Link></li>
             <li> <div className="cursor-pointer" onClick={() => signOut()}>Sign out</div></li>
         </ul>
     </div>

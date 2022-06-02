@@ -18,6 +18,7 @@
     "@prisma/client": "^3.13.0",
     "@reach/window-size": "^0.17.0",
     "@tailwindcss/forms": "^0.5.1",
+    "@tailwindcss/typography": "^0.5.2",
     "ag-charts-react": "^5.2.0",
     "ag-grid-community": "^27.2.1",
     "ag-grid-enterprise": "^27.2.1",

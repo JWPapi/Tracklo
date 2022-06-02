@@ -16,7 +16,7 @@ const GET = (...args) => axios.get(...args).then(res => res.data)
 const POST = (...args) => axios.post(...args).then(res => res.data)
 
 export default function Home() {
-    const {data : session, status } = useSession()
+    const {data :  session, status } = useSession()
     const [utm, setUtm] = useState(utmDefaultOption)
     const [site, setSite] = useState(0)
     const [dateRange, setDateRange] = useState(todayDateRange)
@@ -55,7 +55,7 @@ export default function Home() {
                 <Select className="mb-8 max-w-xs"
                         options={utmOptions?.map(utm => Object.create({ value : utm, label : utm.label }))}
                         onChange={setUtm}
-                        defaultValue={utmOptions[0]}
+                        defaultValue={utmDefaultOption}
                         isSearchable={false}/> <Select className="w-full max-w-xs"
                                                        defaultValue={siteOptions[0]}
                                                        isSearchable={false}
@@ -80,7 +80,8 @@ export default function Home() {
 const NoShopsConnected = () => (
 <div className="p-4 bg-white flex items-center m-8 flex-col">No Shops Connected
     <button className="btn mt-8" onClick={() => router.push('/facebook/adAccountOverview')}>Connect a Shop</button>
-</div> )
+</div>
+)
 
 
 
