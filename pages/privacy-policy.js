@@ -8,7 +8,7 @@ const PrivacyPolicy = () => (
 
         <h1>Tracklo Privacy Policy</h1>
 
-        <p>Tracklo "the App” provides "Tracking with Confidence" "the Service" to merchants who use Shopify to power
+        <p>Tracklo {'"the App"'} provides {'"Tracking with Confidence" "the Service"'} to merchants who use Shopify to power
            their stores. This Privacy Policy describes how personal information is collected, used, and shared when you
            install or use the App in connection with your Shopify-supported store.
         </p>
