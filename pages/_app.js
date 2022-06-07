@@ -26,7 +26,7 @@ export default function App({ Component, pageProps : { session, ...pageProps } }
 const Header = () => {
     return (
     <Head>
-        <title>Tracklo.io – Track with Confidence</title>
+        <title>Trackalot.io – Track a Lot</title>
         <link rel="icon" href="/favicon.ico"/>
     </Head>
     )
