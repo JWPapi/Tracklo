@@ -1,8 +1,15 @@
 import { getProviders, signIn, getCsrfToken } from 'next-auth/react'
 import Image from 'next/image'
 import logo from '../../public/images/logo.png'
+import { useEffect, useState } from 'react'
 
-export default function SignIn({ csrfToken }) {
+export default function SignIn() {
+    const [csrfToken, setCsrfToken] = useState('')
+
+    useEffect(() => {
+        getCsrfToken().then(setCsrfToken)
+    }, [])
+
     const isDev = process.env.NODE_ENV === 'development'
 
     return (
@@ -34,13 +41,9 @@ export default function SignIn({ csrfToken }) {
     )
 }
 
-export async function getServerSideProps(context) {
-    const csrfToken = await getCsrfToken(context)
-    return {
-        props : { csrfToken }
-    }
-}
+
 
 SignIn.noDrawer = function noDrawer() {
     return true
 }
+
